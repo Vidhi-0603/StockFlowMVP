@@ -21,9 +21,7 @@ function ProductList() {
   };
 
   const editProduct = async (id) => {
-    navigate("/edit-product");
-    // await API.put(`/products/${id}`);
-    // fetchProducts();
+    navigate(`/edit-product/${id}`);
   };
   return (
     <div>

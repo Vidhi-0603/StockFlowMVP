@@ -34,6 +34,17 @@ router.get("/", authMiddleware, async (req, res) => {
   }
 });
 
+router.get("/:id", authMiddleware, async (req, res) => {
+  const product = await prisma.product.findFirst({
+    where: {
+      id: req.params.id,
+      organizationId: req.user.organizationId,
+    },
+  });
+
+  res.json(product);
+});
+
 router.delete("/:id", authMiddleware, async (req, res) => {
   try {
     await prisma.product.delete({
