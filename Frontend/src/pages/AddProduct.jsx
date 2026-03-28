@@ -8,7 +8,6 @@ function AddProduct() {
   const [form, setForm] = useState({
     name: "",
     sku: "",
-    description: "",
     quantity: 0,
     costPrice: "",
     sellingPrice: "",
@@ -42,10 +41,6 @@ function AddProduct() {
         <input
           placeholder="SKU"
           onChange={(e) => setForm({ ...form, sku: e.target.value })}
-        />
-        <input
-          placeholder="Description"
-          onChange={(e) => setForm({ ...form, description: e.target.value })}
         />
         <input
           type="number"

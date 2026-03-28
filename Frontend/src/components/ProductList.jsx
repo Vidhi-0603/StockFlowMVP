@@ -5,8 +5,10 @@ function ProductList() {
   const [products, setProducts] = useState([]);
 
   const fetchProducts = async () => {
-    const res = await API.get("/products/getProducts");
-    setProducts(res.data);
+      const { data } = await API.get("/products");
+      console.log(data,"data");
+      
+    setProducts(data);
   };
 
   useEffect(() => {

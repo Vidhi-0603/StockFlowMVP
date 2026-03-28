@@ -5,6 +5,8 @@ const prisma = require("../prismaClient");
 
 router.post("/add", authMiddleware, async (req, res) => {  
   try {
+    console.log(req.body);
+    
     const product = await prisma.product.create({
       data: {
         ...req.body,
@@ -18,14 +20,18 @@ router.post("/add", authMiddleware, async (req, res) => {
   }
 });
 
-router.get("/getProducts", authMiddleware, async (req, res) => {
-  const products = await prisma.product.findMany({
-    where: {
-      organizationId: req.user.organizationId,
-    },
-  });
+router.get("/", authMiddleware, async (req, res) => {
+  try {
+    const products = await prisma.product.findMany({
+      where: {
+        organizationId: req.user.organizationId,
+      },
+    });
 
-  res.json(products);
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 
