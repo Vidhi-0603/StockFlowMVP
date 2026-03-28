@@ -58,7 +58,7 @@ router.post("/login", async (req, res) => {
         userId: user.id,
         organizationId: user.organizationId,
       },
-      "SECRET_KEY",
+      process.env.JWT_KEY,
       { expiresIn: "1d" },
     );
 
