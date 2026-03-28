@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 function AddProduct() {
   const navigate = useNavigate();
-
   const [form, setForm] = useState({
     name: "",
     sku: "",
@@ -13,66 +12,84 @@ function AddProduct() {
     sellingPrice: "",
     lowStockThreshold: "",
   });
+  const [errors, setErrors] = useState({});
+
+  const validate = () => {
+    const errs = {};
+    if (!form.name.trim()) errs.name = "Name is required";
+    if (!form.sku.trim()) errs.sku = "SKU is required";
+    if (form.quantity < 0) errs.quantity = "Quantity cannot be negative";
+    if (!form.costPrice || form.costPrice <= 0)
+      errs.costPrice = "Valid cost price required";
+    if (!form.sellingPrice || form.sellingPrice <= 0)
+      errs.sellingPrice = "Valid selling price required";
+    if (!form.lowStockThreshold || form.lowStockThreshold < 0)
+      errs.lowStockThreshold = "Valid threshold required";
+    return errs;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const errs = validate();
+    if (Object.keys(errs).length) return setErrors(errs);
     try {
       await API.post("/products/add", form);
-
       alert("Product added successfully");
-
-      // redirect back to dashboard
       navigate("/dashboard");
     } catch (err) {
       alert(err.response?.data?.error || "Error adding product");
     }
   };
 
+  const field = (label, key, type = "text") => (
+    <div className="mb-4">
+      <input
+        type={type}
+        placeholder={label}
+        value={form[key]}
+        className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-gray-400"
+        onChange={(e) => {
+          setForm({
+            ...form,
+            [key]: type === "number" ? Number(e.target.value) : e.target.value,
+          });
+          setErrors({ ...errors, [key]: "" });
+        }}
+      />
+      {errors[key] && (
+        <p className="text-red-500 text-xs mt-1">{errors[key]}</p>
+      )}
+    </div>
+  );
+
   return (
-    <div>
-      <h2>Add Product</h2>
-
-      <form onSubmit={handleSubmit}>
-        <input
-          placeholder="Name"
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-        />
-        <input
-          placeholder="SKU"
-          onChange={(e) => setForm({ ...form, sku: e.target.value })}
-        />
-        <input
-          type="number"
-          placeholder="Quantity"
-          onChange={(e) =>
-            setForm({ ...form, quantity: Number(e.target.value) })
-          }
-        />
-        <input
-          type="number"
-          placeholder="Cost Price"
-          onChange={(e) =>
-            setForm({ ...form, costPrice: Number(e.target.value) })
-          }
-        />
-        <input
-          type="number"
-          placeholder="Selling Price"
-          onChange={(e) =>
-            setForm({ ...form, sellingPrice: Number(e.target.value) })
-          }
-        />
-        <input
-          type="number"
-          placeholder="Low Stock Threshold"
-          onChange={(e) =>
-            setForm({ ...form, lowStockThreshold: Number(e.target.value) })
-          }
-        />
-
-        <button type="submit">Add Product</button>
-      </form>
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="bg-white border border-gray-200 rounded-lg p-8 w-full max-w-md shadow-sm">
+        <h2 className="text-xl font-semibold mb-6">Add Product</h2>
+        <form onSubmit={handleSubmit}>
+          {field("Name", "name")}
+          {field("SKU", "sku")}
+          {field("Quantity", "quantity", "number")}
+          {field("Cost Price", "costPrice", "number")}
+          {field("Selling Price", "sellingPrice", "number")}
+          {field("Low Stock Threshold", "lowStockThreshold", "number")}
+          <div className="flex gap-3 mt-2">
+            <button
+              type="submit"
+              className="bg-gray-900 text-white text-sm px-4 py-2 rounded hover:bg-gray-700 transition"
+            >
+              Add Product
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate("/dashboard")}
+              className="text-sm border border-gray-300 rounded px-4 py-2 hover:bg-gray-100 transition"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
