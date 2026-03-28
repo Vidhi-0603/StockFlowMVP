@@ -10,7 +10,7 @@ const settingsRoutes = require("./src/routes/settings.route");
 
 app.use(
   cors({
-    origin: frontend_url,
+    origin: process.env.FRONTEND_URL,
   }),
 );
 app.use(express.json());
