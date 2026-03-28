@@ -21,9 +21,30 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/add-product" element={<AddProduct />} />
-        <Route path="/edit-product/:id" element={<EditProduct />} />
-        <Route path="/settings" element={<Settings />} />
+        <Route
+          path="/add-product"
+          element={
+            <ProtectedRoute>
+              <AddProduct />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/edit-product/:id"
+          element={
+            <ProtectedRoute>
+              <EditProduct />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <ProtectedRoute>
+              <Settings />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
