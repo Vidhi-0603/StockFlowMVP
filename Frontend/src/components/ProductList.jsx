@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import API from "../axiosInstance";
+import { useNavigate } from "react-router-dom";
 
 function ProductList() {
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
 
   const fetchProducts = async () => {
-      const { data } = await API.get("/products");
-      console.log(data,"data");
-      
+    const { data } = await API.get("/products");
     setProducts(data);
   };
 
@@ -20,6 +20,11 @@ function ProductList() {
     fetchProducts();
   };
 
+  const editProduct = async (id) => {
+    navigate("/edit-product");
+    // await API.put(`/products/${id}`);
+    // fetchProducts();
+  };
   return (
     <div>
       <h2>Products</h2>
@@ -28,6 +33,7 @@ function ProductList() {
         <div key={p.id}>
           {p.name} - {p.quantity}
           <button onClick={() => deleteProduct(p.id)}>Delete</button>
+          <button onClick={() => editProduct(p.id)}>Edit</button>
         </div>
       ))}
     </div>
