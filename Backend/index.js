@@ -4,6 +4,8 @@ const cors = require("cors");
 const app = express();
 const authRoutes = require("./src/routes/auth.route");
 const productRoutes = require("./src/routes/product.route");
+const dashboardRoutes = require("./src/routes/dashboard.route");
+
 
 app.use(cors());
 app.use(express.json());
@@ -12,6 +14,8 @@ app.use(express.json());
 
 app.use("/auth", authRoutes);
 app.use("/products", productRoutes);
+app.use("/dashboard", dashboardRoutes);
+
 
 
 

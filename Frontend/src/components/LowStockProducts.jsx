@@ -1,7 +1,7 @@
 import API from "../axiosInstance";
 import { useNavigate } from "react-router-dom";
 
-function ProductList({ products, refresh }) {
+function LowStockProducts({ products, refresh }) {
   const navigate = useNavigate();
 
   const deleteProduct = async (id) => {
@@ -25,8 +25,7 @@ function ProductList({ products, refresh }) {
   return (
     <div>
       <h2>Products</h2>
-      {products.length === 0 && <p>No products</p>}
-
+      {products.length === 0 && <p>No low stock products</p>}
       {products.map((p) => (
         <div key={p.id}>
           {p.name} - {p.quantity}
@@ -38,4 +37,4 @@ function ProductList({ products, refresh }) {
   );
 }
 
-export default ProductList;
+export default LowStockProducts;
