@@ -1,10 +1,4 @@
 # StockFlow MVP -- SaaS Inventory Management System
-
-## 🚀 Live Demo
-
--   Frontend: https://your-frontend.vercel.app
--   Backend: https://your-backend.onrender.com
-
 ------------------------------------------------------------------------
 
 ## 📌 Overview
