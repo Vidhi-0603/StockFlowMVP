@@ -23,10 +23,11 @@ function Dashboard() {
   useEffect(() => {
     fetchDashboardData();
   }, []);
-  
+
   return (
     <>
       <h1>Dashboard</h1>
+      <button onClick={() => navigate("/settings")}>Settings</button><br/>
       Total Products: {totalProducts}
       <br />
       Total Quantity: {totalQuantity}

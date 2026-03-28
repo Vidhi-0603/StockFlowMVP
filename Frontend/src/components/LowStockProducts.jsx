@@ -28,7 +28,7 @@ function LowStockProducts({ products, refresh }) {
       {products.length === 0 && <p>No low stock products</p>}
       {products.map((p) => (
         <div key={p.id}>
-          {p.name} - {p.quantity}
+          {p.name} - {p.quantity} - {p.sku} - {p.lowStockThreshold}
           <button onClick={() => deleteProduct(p.id)}>Delete</button>
           <button onClick={() => editProduct(p.id)}>Edit</button>
         </div>

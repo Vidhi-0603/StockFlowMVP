@@ -18,6 +18,8 @@ model Organization {
   name      String
   createdAt DateTime @default(now())
 
+defaultLowStockThreshold Int @default(5)
+
   users     User[]
   products  Product[]
 
