@@ -18,7 +18,7 @@ router.post("/add", authMiddleware, async (req, res) => {
   }
 });
 
-router.get("/", authMiddleware, async (req, res) => {
+router.get("/getProducts", authMiddleware, async (req, res) => {
   const products = await prisma.product.findMany({
     where: {
       organizationId: req.user.organizationId,
